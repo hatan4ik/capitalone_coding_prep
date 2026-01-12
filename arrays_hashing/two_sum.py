@@ -63,16 +63,35 @@ VARIATION IMPLEMENTATION: Two Sum II (Input is Sorted)
 If the array is already sorted, we can use Two Pointers for O(1) space.
 """
 def two_sum_sorted(nums: List[int], target: int) -> List[int]:
+    """
+    Solves Two Sum when the input array is sorted.
+    Uses Two Pointers technique.
+    Time: O(n)
+    Space: O(1)
+    """
     left, right = 0, len(nums) - 1
     
     while left < right:
         current_sum = nums[left] + nums[right]
         
         if current_sum == target:
-            return [left, right] # or [left+1, right+1] if 1-indexed
+            return [left, right]
         elif current_sum < target:
             left += 1
         else:
             right -= 1
             
     return []
+
+if __name__ == "__main__":
+    # Test Cases for Standard Two Sum
+    print("--- Testing Two Sum (Hash Map) ---")
+    assert two_sum([2, 7, 11, 15], 9) == [0, 1]
+    assert two_sum([3, 2, 4], 6) == [1, 2]
+    print("Two Sum Tests Passed!")
+
+    # Test Cases for Sorted Two Sum
+    print("\n--- Testing Two Sum II (Two Pointers) ---")
+    assert two_sum_sorted([2, 7, 11, 15], 9) == [0, 1]
+    assert two_sum_sorted([2, 3, 4], 6) == [0, 2]
+    print("Two Sum Sorted Tests Passed!")

@@ -42,28 +42,9 @@ Function isAnagram(s, t):
     Return True
 """
 
+# One-liner solution
 def is_anagram(s: str, t: str) -> bool:
-    if len(s) != len(t):
-        return False
-        
-    count = {}
-    
-    for char in s:
-        count[char] = count.get(char, 0) + 1
-        
-    for char in t:
-        if char not in count:
-            return False
-        count[char] -= 1
-        if count[char] < 0:
-            return False
-            
-    return True
-
-# Alternative using Python's Counter
-from collections import Counter
-def is_anagram_pythonic(s: str, t: str) -> bool:
-    return Counter(s) == Counter(t)
+    return sorted(s) == sorted(t)
 
 if __name__ == "__main__":
     print("--- Testing Valid Anagram ---")
@@ -71,7 +52,6 @@ if __name__ == "__main__":
     # Test 1
     s1, t1 = "anagram", "nagaram"
     assert is_anagram(s1, t1) == True
-    assert is_anagram_pythonic(s1, t1) == True
     print(f"Test 1 Passed: '{s1}', '{t1}' -> True")
     
     # Test 2

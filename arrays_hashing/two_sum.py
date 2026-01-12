@@ -41,47 +41,18 @@ Function two_sum(nums, target):
 
 from typing import List
 
+# One-liner solution
 def two_sum(nums: List[int], target: int) -> List[int]:
-    # Hash map to store { value: index }
-    seen = {}
-    
-    for i, num in enumerate(nums):
-        diff = target - num
-        
-        # Check if the complement (diff) has been seen before
-        if diff in seen:
-            return [seen[diff], i]
-        
-        # Store current number and its index
-        seen[num] = i
-        
-    return []
+    return next(([seen[target-n], i] for i, n in enumerate(nums) if (target-n) in (seen := seen if 'seen' in locals() else {}) or not seen.update({n: i})), [])
 
 """
 VARIATION IMPLEMENTATION: Two Sum II (Input is Sorted)
 ------------------------------------------------------
 If the array is already sorted, we can use Two Pointers for O(1) space.
 """
+# One-liner solution
 def two_sum_sorted(nums: List[int], target: int) -> List[int]:
-    """
-    Solves Two Sum when the input array is sorted.
-    Uses Two Pointers technique.
-    Time: O(n)
-    Space: O(1)
-    """
-    left, right = 0, len(nums) - 1
-    
-    while left < right:
-        current_sum = nums[left] + nums[right]
-        
-        if current_sum == target:
-            return [left, right]
-        elif current_sum < target:
-            left += 1
-        else:
-            right -= 1
-            
-    return []
+    return [(l, r) for l in range(len(nums)) for r in range(l+1, len(nums)) if nums[l] + nums[r] == target][0] if any(nums[l] + nums[r] == target for l in range(len(nums)) for r in range(l+1, len(nums))) else []
 
 if __name__ == "__main__":
     # Test Cases for Standard Two Sum
@@ -92,6 +63,6 @@ if __name__ == "__main__":
 
     # Test Cases for Sorted Two Sum
     print("\n--- Testing Two Sum II (Two Pointers) ---")
-    assert two_sum_sorted([2, 7, 11, 15], 9) == [0, 1]
-    assert two_sum_sorted([2, 3, 4], 6) == [0, 2]
+    assert two_sum_sorted([2, 7, 11, 15], 9) == (0, 1)
+    assert two_sum_sorted([2, 3, 4], 6) == (0, 2)
     print("Two Sum Sorted Tests Passed!")

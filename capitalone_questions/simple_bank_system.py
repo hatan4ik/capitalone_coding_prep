@@ -44,41 +44,9 @@ Class Bank:
         Return True
 """
 
+# One-liner solutions for Bank class methods
 class Bank:
-    def __init__(self, balance: list[int]):
-        self.balance = balance
-        self.n = len(balance)
-
-    def transfer(self, account1: int, account2: int, money: int) -> bool:
-        # Check if accounts are valid (1-indexed)
-        if not (1 <= account1 <= self.n and 1 <= account2 <= self.n):
-            return False
-        
-        # Check for sufficient funds
-        if self.balance[account1 - 1] < money:
-            return False
-            
-        # Perform transfer
-        self.balance[account1 - 1] -= money
-        self.balance[account2 - 1] += money
-        return True
-
-    def deposit(self, account: int, money: int) -> bool:
-        # Check if account is valid
-        if not (1 <= account <= self.n):
-            return False
-            
-        self.balance[account - 1] += money
-        return True
-
-    def withdraw(self, account: int, money: int) -> bool:
-        # Check if account is valid
-        if not (1 <= account <= self.n):
-            return False
-
-        # Check for sufficient funds
-        if self.balance[account - 1] < money:
-            return False
-            
-        self.balance[account - 1] -= money
-        return True
+    def __init__(self, balance: list[int]): self.balance, self.n = balance, len(balance)
+    def transfer(self, a1: int, a2: int, money: int) -> bool: return 1 <= a1 <= self.n and 1 <= a2 <= self.n and self.balance[a1-1] >= money and not (self.balance[a1-1].__isub__(money), self.balance[a2-1].__iadd__(money))[0]
+    def deposit(self, account: int, money: int) -> bool: return 1 <= account <= self.n and not self.balance[account-1].__iadd__(money)
+    def withdraw(self, account: int, money: int) -> bool: return 1 <= account <= self.n and self.balance[account-1] >= money and not self.balance[account-1].__isub__(money)

@@ -37,16 +37,8 @@ Function contains_duplicate(nums):
 
 from typing import List
 
+# One-liner solution
 def contains_duplicate(nums: List[int]) -> bool:
-    seen = set()
-    for num in nums:
-        if num in seen:
-            return True
-        seen.add(num)
-    return False
-
-# Alternative Pythonic One-Liner
-def contains_duplicate_pythonic(nums: List[int]) -> bool:
     return len(set(nums)) != len(nums)
 
 if __name__ == "__main__":
@@ -55,13 +47,11 @@ if __name__ == "__main__":
     # Test Case 1: Duplicates exist
     nums1 = [1, 2, 3, 1]
     assert contains_duplicate(nums1) == True
-    assert contains_duplicate_pythonic(nums1) == True
     print(f"Test 1 Passed: {nums1} -> True")
 
     # Test Case 2: No duplicates
     nums2 = [1, 2, 3, 4]
     assert contains_duplicate(nums2) == False
-    assert contains_duplicate_pythonic(nums2) == False
     print(f"Test 2 Passed: {nums2} -> False")
 
     # Test Case 3: Multiple duplicates

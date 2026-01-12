@@ -54,67 +54,14 @@ Function three_equal_parts(arr):
 
 from typing import List
 
+# One-liner solution
 def three_equal_parts(arr: List[int]) -> List[int]:
-    total_ones = sum(arr)
-    
-    # 1. Quick Failure Checks
-    if total_ones % 3 != 0:
-        return [-1, -1]
-    
-    # 2. Handle All Zeros case
-    if total_ones == 0:
-        return [0, len(arr) - 1] # Valid split for [0, 0, 0] is i=0, j=2
-        
-    k = total_ones // 3
-    
-    # 3. Find starting indices of the 1st, (k+1)th, and (2k+1)th ones
-    i1, i2, i3 = -1, -1, -1
-    count = 0
-    
-    for idx, x in enumerate(arr):
-        if x == 1:
-            count += 1
-            if count == 1:
-                i1 = idx
-            elif count == k + 1:
-                i2 = idx
-            elif count == 2 * k + 1:
-                i3 = idx
-
-    # 4. Compare partitions pixel by pixel
-    # We drive the loop using i3 because Part 3 extends to the very end of the array.
-    while i3 < len(arr):
-        if arr[i1] == arr[i2] == arr[i3]:
-            i1 += 1
-            i2 += 1
-            i3 += 1
-        else:
-            return [-1, -1]
-            
-    # 5. Return split points
-    # i1 is now at the start of Part 2 (after incrementing past Part 1's trailing zeros)
-    # i2 is now at the start of Part 3
-    return [i1 - 1, i2]
+    return [-1, -1] if sum(arr) % 3 or (lambda ones: ones and not all(arr[i] == arr[j] == arr[k] for i, j, k in zip(*[iter(range(next(i for i, x in enumerate(arr) if x), 0) + p, len(arr))) for p in [0, ones//3, 2*ones//3]])))(sum(arr)) else [0, len(arr)-1] if not sum(arr) else [next(i for i, x in enumerate(arr) if x) + sum(arr)//3 - 1, next(i for i, x in enumerate(arr) if x) + 2*sum(arr)//3]
 
 """
 VARIATION: Partition Array Into Three Parts With Equal Sum (LeetCode 1013)
 This is the simpler integer version often used as a warm-up.
 """
+# One-liner solution
 def can_three_parts_equal_sum(arr: List[int]) -> bool:
-    total = sum(arr)
-    if total % 3 != 0:
-        return False
-        
-    target = total // 3
-    current_sum = 0
-    parts_found = 0
-    
-    for num in arr:
-        current_sum += num
-        if current_sum == target:
-            parts_found += 1
-            current_sum = 0
-            
-    # We need at least 3 parts. 
-    # (parts_found >= 3 handles cases where 0s exist between parts)
-    return parts_found >= 3
+    return sum(arr) % 3 == 0 and sum(1 for i, s in enumerate((lambda t: [sum(arr[:i+1]) for i in range(len(arr))])(sum(arr)//3)) if s == sum(arr)//3) >= 3
